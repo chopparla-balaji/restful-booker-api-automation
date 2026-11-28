@@ -74,7 +74,7 @@ pytest
 pytest -v
 
 # Run a specific test file
-pytest tests/get_bookings.py
+pytest tests/get_bookings_test.py
 ```
 
 ## How It Works

@@ -1,5 +1,5 @@
 from validations.request_layer import RequestLayer
-from services.bookings import Bookings
+from services.bookings_service import Bookings
 from utils.config_reader import ConfigReader
 from typing import Optional
 import requests
@@ -11,22 +11,22 @@ class RestApis:
         self.request_layer = RequestLayer()
         self.bookings = Bookings(self.session)
 
-    def get_request(self, end_point:str, params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> None:
+    def get_request(self, end_point:str, params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> dict:
         self.request_layer.validate_request_data(end_point, params, headers)
-        self.bookings.get_bookings(ConfigReader.BASE_URL + end_point, params, headers)
+        return self.bookings.get_bookings(ConfigReader.BASE_URL + end_point, params, headers)
 
-    def post_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> None:
+    def post_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> dict:
         self.request_layer.validate_request_payload(end_point, data, params, headers)
-        self.bookings.post_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
+        return self.bookings.post_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
 
-    def update_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> None:
+    def update_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> dict:
         self.request_layer.validate_request_payload(end_point, data, params, headers)
-        self.bookings.update_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
+        return self.bookings.update_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
 
-    def partial_update_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> None:
+    def partial_update_request(self, end_point:str, data:dict[str, str], params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> dict:
         self.request_layer.validate_request_payload(end_point, data, params, headers)
-        self.bookings.partial_update_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
+        return self.bookings.partial_update_bookings(ConfigReader.BASE_URL + end_point, data, params, headers)
 
-    def delete_request(self, end_point:str, params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> None:
+    def delete_request(self, end_point:str, params:Optional[dict[str, str]]=None, headers:Optional[dict[str, str]]=None) -> dict:
         self.request_layer.validate_request_data(end_point, params, headers)
-        self.bookings.delete_bookings(ConfigReader.BASE_URL + end_point, params, headers)
+        return self.bookings.delete_bookings(ConfigReader.BASE_URL + end_point, params, headers)
